@@ -6,11 +6,16 @@ import os
 
 API_ID = 39765169
 API_HASH = "f65e0f735a50751bd7d22f5ff83bde66"
+SESSION_STRING = os.environ.get("SESSION_STRING")
+
 SOURCE_CHATS = ["pubgleakchannel", "COMFYSHAHBAJ", "MadTamizha"]
 TARGET_CHAT = "gemeraleakchat"
 FORBIDDEN_WORDS = ["link 18+", "lừa đảo", "hack"]
 
-app = Client("my_cipher_bot", api_id=API_ID, api_hash=API_HASH)
+if SESSION_STRING:
+    app = Client("my_cipher_bot", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH)
+else:
+    app = Client("my_cipher_bot", api_id=API_ID, api_hash=API_HASH)
 processed_media_hashes = set()
 is_afk = False
 
