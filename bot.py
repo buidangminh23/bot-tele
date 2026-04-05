@@ -1,5 +1,10 @@
 import os
 import asyncio
+
+# SỬA LỖI: Bắt buộc phải tạo vòng lặp sự kiện trước khi import pyrogram
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
 from pyrogram import Client, filters
 from flask import Flask
 from threading import Thread
@@ -104,7 +109,5 @@ async def auto_censor(client, message):
             pass
 
 if __name__ == "__main__":
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
     keep_alive()
     app.run()
