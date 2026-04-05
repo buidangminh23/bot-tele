@@ -1,8 +1,8 @@
-from pyrogram import Client, filters
+import os
 import asyncio
+from pyrogram import Client, filters
 from flask import Flask
 from threading import Thread
-import os
 
 API_ID = 39765169
 API_HASH = "f65e0f735a50751bd7d22f5ff83bde66"
@@ -16,6 +16,7 @@ if SESSION_STRING:
     app = Client("my_cipher_bot", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH)
 else:
     app = Client("my_cipher_bot", api_id=API_ID, api_hash=API_HASH)
+
 processed_media_hashes = set()
 is_afk = False
 
@@ -49,7 +50,7 @@ async def mirror_and_scan(client, message):
                 file_unique_id = message.video.file_unique_id
             elif message.document:
                 file_unique_id = message.document.file_unique_id
-                
+            
             if file_unique_id:
                 if file_unique_id in processed_media_hashes:
                     return 
@@ -103,5 +104,7 @@ async def auto_censor(client, message):
             pass
 
 if __name__ == "__main__":
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     keep_alive()
     app.run()
